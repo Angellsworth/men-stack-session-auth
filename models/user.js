@@ -1,25 +1,47 @@
-// Import the mongoose library to interact with MongoDB
-const mongoose = require('mongoose');
+// -----------------------
+// 🔹 USER MODEL 🔹
+// -----------------------
+// This file defines the structure of the "User" collection in MongoDB.
+// It ensures that every user has a unique username and a password (which should be hashed before storage).
 
-// Define a new schema for the "User" model
+// Import the Mongoose library to interact with MongoDB
+const mongoose = require("mongoose");
+
+// -----------------------
+// 🔹 DEFINE USER SCHEMA 🔹
+// -----------------------
+// A schema defines the structure of the document (data) stored in MongoDB.
+// The `User` schema specifies the required fields and their constraints.
 const userSchema = new mongoose.Schema({
-    // "username" field - stores the user's name
+    // -----------------------
+    // 🔹 USERNAME FIELD 🔹
+    // -----------------------
     username: {
-        type: String, // The data type must be a string
+        type: String,   // The username must be a string
         required: true, // Ensures that a username is required (NOT NULL)
+        unique: true    // Ensures that usernames are unique (no duplicates in the database)
     },
     
-    // "password" field - stores the user's password (hashed in production)
+    // -----------------------
+    // 🔹 PASSWORD FIELD 🔹
+    // -----------------------
     password: {
-        type: String, // The password must be a string
+        type: String,   // The password must be a string
         required: true, // Ensures that a password is required (NOT NULL)
-        // In a real-world scenario, passwords should be hashed before storing them in the database
+        // ⚠️ Passwords should NEVER be stored in plain text!
+        // Always hash passwords before saving them to the database.
     }
 });
 
-// Create a Mongoose model named "User" using the defined schema
-// This model represents the "users" collection in MongoDB
+// -----------------------
+// 🔹 CREATE USER MODEL 🔹
+// -----------------------
+// Mongoose converts this schema into a collection called "users" in MongoDB.
+// The `User` model allows us to interact with the database using JavaScript.
 const User = mongoose.model("User", userSchema);
 
-// Export the User model so it can be used in other parts of the application
+// -----------------------
+// 🔹 EXPORT THE MODEL 🔹
+// -----------------------
+// This allows us to use the `User` model in other files (e.g., auth controllers).
 module.exports = User;
