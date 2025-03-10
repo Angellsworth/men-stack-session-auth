@@ -25,7 +25,10 @@ app.use(morgan('dev'))
 
 
 //Mount Routes
-
+// GET /
+app.get("/", async (req, res) => {
+    res.render("index.ejs");
+  });
 //Tell the app to Listen
 app.listen(port, () => {
     console.log(`Angela, Your Express app is Authenticating on port ${port}!!`)
